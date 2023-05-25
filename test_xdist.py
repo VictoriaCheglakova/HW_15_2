@@ -9,8 +9,8 @@ def session_scoped_fixture():
 
 
 @pytest.mark.parametrize("param", range(10))
-def test_many_params(param, random_number):
-    pass
+def test_many_params(param, session_scoped_fixture, random_number):
+    assert False, random_number
 
 
 @pytest.fixture(scope="session")

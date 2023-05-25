@@ -1,5 +1,5 @@
 
-- Хуки pytest
+- Хуки pytest: https://docs.pytest.org/en/7.3.x/reference/reference.html#hooks
   - Примерное дерево хуков - https://github.com/pytest-dev/pytest/issues/3261#issuecomment-369740536
   - pytest_addoption - добавляем новые опции
   - pytest_configure - меняем что-нибудь в конфигурации

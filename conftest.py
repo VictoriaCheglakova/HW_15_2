@@ -14,12 +14,14 @@ def pytest_addoption(parser, pluginmanager):
     parser.addoption(
         "--mobile-only",
         type=bool,
+        required=False,
         default=False,
     )
 
 
 def pytest_configure(config):
-    """Skip tests for firefox if mobile-only option is True"""
+    if config.getoption("--browser") == "chrome":
+        config.option.browser = "chrome-98"
 
 
 def pytest_sessionstart(session):
@@ -30,6 +32,7 @@ def pytest_sessionstart(session):
 def pytest_runtest_call(item):
     """Allure dynamic title"""
     yield
+    allure.dynamic.title(" ".join(item.name.split("_")[1:]).title())
 
 
 def pytest_collection_modifyitems(config, items: list[pytest.Item]):
@@ -37,6 +40,13 @@ def pytest_collection_modifyitems(config, items: list[pytest.Item]):
     Skip other tests if mobile-only option is True
     Sort tests if required
     """
+    items.sort(key=lambda x: x.name, reverse=True)
+
+    for item in items:
+        if "mobile" not in item.name and config.getoption("--mobile-only"):
+            item.add_marker(pytest.mark.skip("Мы запустили только мобильные тесты"))
+
+    items.sort(key=lambda x: "desktop" in x.own_markers)
 
 
 def pytest_sessionfinish(session):
