@@ -1,4 +1,8 @@
-pytest
+pytest~=8.3.4
 pytest-xdist
 allure-pytest
-filelock
+filelock~=3.17.0
+
+selenium~=4.28.1
+allure-python-commons~=2.13.5
+selene~=2.0.0rc9
